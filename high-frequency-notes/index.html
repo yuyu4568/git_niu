@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>高频电子线路 · 第2章 高频基础电路笔记</title>
+<style>
+:root{
+  --bg:#f5f7fb; --card:#ffffff; --ink:#20283a; --muted:#5b6577;
+  --line:#dfe5ef; --brand:#1f4e8c; --brand2:#2f7dd1;
+  --key-bg:#fff6e5; --key-line:#f2b84b; --key-ink:#7a4a00;
+  --warn-bg:#fdecef; --warn-line:#e15b6e; --warn-ink:#7c1f30;
+  --sum-bg:#e9f5ee; --sum-line:#37a46b; --sum-ink:#175c38;
+  --ext-bg:#eaf3ff; --ext-line:#3f7ed0; --ext-ink:#17437e;
+  --form-bg:#f8fafc;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  line-height:1.7; font-size:16px;
+}
+a{color:var(--brand2); text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:960px; margin:0 auto; padding:14px 14px 60px}
+header.hero{
+  background:linear-gradient(135deg,#123a6d 0%,#2f7dd1 100%);
+  color:#fff; border-radius:18px; padding:26px 22px; margin:14px 0 18px;
+  box-shadow:0 10px 24px rgba(18,58,109,.18);
+}
+.kicker{font-size:12px; letter-spacing:.12em; opacity:.85}
+header.hero h1{margin:8px 0 10px; font-size:clamp(22px,5vw,32px); line-height:1.25}
+header.hero p{margin:0; opacity:.95; font-size:14px}
+.meta{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
+.meta span{background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.2); padding:4px 9px; border-radius:999px; font-size:12px}
+nav.toc{
+  background:var(--card); border:1px solid var(--line); border-radius:14px;
+  padding:14px 16px; margin:0 0 16px;
+}
+nav.toc b{display:block; margin-bottom:6px; color:var(--brand)}
+nav.toc .links{display:flex; flex-wrap:wrap; gap:7px}
+nav.toc a{background:#eef4fb; color:#1f4e8c; border-radius:999px; padding:5px 10px; font-size:13px; text-decoration:none}
+nav.toc a:hover{background:#dbeafe}
+section.card{
+  background:var(--card); border:1px solid var(--line); border-radius:16px;
+  padding:18px 16px; margin:0 0 16px; box-shadow:0 1px 3px rgba(30,40,60,.04);
+}
+h2{font-size:22px; color:var(--brand); margin:0 0 12px; padding-bottom:8px; border-bottom:2px solid #e3ebf5}
+h3{font-size:18px; color:#16375f; margin:18px 0 8px}
+h4{font-size:16px; margin:14px 0 6px}
+p{margin:8px 0}
+ul,ol{margin:8px 0; padding-left:22px}
+li{margin:4px 0}
+strong{color:#132c4d}
+.lead{color:var(--muted); font-size:14px}
+.callout{border-radius:12px; padding:12px 13px; margin:12px 0; border-left:5px solid; font-size:15px}
+.key{background:var(--key-bg); border-color:var(--key-line); color:var(--key-ink)}
+.warn{background:var(--warn-bg); border-color:var(--warn-line); color:var(--warn-ink)}
+.summary{background:var(--sum-bg); border-color:var(--sum-line); color:var(--sum-ink)}
+.ext{background:var(--ext-bg); border-color:var(--ext-line); color:var(--ext-ink)}
+.callout b.title{display:block; margin-bottom:4px; letter-spacing:.03em}
+.formula{
+  background:var(--form-bg); border:1px solid var(--line); border-left:4px solid #2f7dd1;
+  border-radius:10px; padding:10px 12px; margin:10px 0; overflow-x:auto;
+}
+.formula .no{font-size:12px; color:#8390a3; display:block}
+table{border-collapse:collapse; width:100%; margin:10px 0; font-size:14px}
+th,td{border:1px solid var(--line); padding:8px 9px; text-align:left; vertical-align:top}
+th{background:#eef4fb; color:#16375f}
+tr:nth-child(even) td{background:#fafcfe}
+.table-wrap{overflow-x:auto}
+figure{margin:14px 0}
+figure svg{width:100%; height:auto; display:block; background:#fff; border:1px solid #e3e9f2; border-radius:12px}
+figcaption{font-size:13px; color:var(--muted); text-align:center; margin-top:6px}
+.grid2{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+@media(max-width:720px){
+  .grid2,.grid3{grid-template-columns:1fr}
+  body{font-size:15px}
+  section.card{padding:14px 12px}
+}
+.tag{display:inline-block; background:#eef4fb; color:#1f4e8c; border-radius:999px; padding:2px 8px; font-size:12px; margin-left:6px}
+.foot{margin-top:22px; text-align:center; color:var(--muted); font-size:13px}
+.badge-highlight{background:#fff1b8; color:#6b4d00; padding:0 4px; border-radius:4px; font-weight:600}
+</style>
+<script>
+window.MathJax = {
+  tex: {inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']]},
+  svg: {fontCache: 'global'}
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="kicker">HIGH-FREQUENCY ELECTRONIC CIRCUITS · 笔记整理</div>
+    <h1>高频电子线路：第 2 章 高频基础电路</h1>
+    <p>根据课堂录音转文本整理，已校正语音识别误差，并补充公式推导、结论对比与电路图。</p>
+    <div class="meta">
+      <span>📡 高频：3–30 MHz</span>
+      <span>🔁 LC 串/并联谐振</span>
+      <span>⚖️ 阻抗变换</span>
+      <span>📱 移动端适配</span>
+    </div>
+  </header>
+
+  <nav class="toc">
+    <b>目录</b>
+    <div class="links">
+      <a href="#s0">课程定位</a>
+      <a href="#s1">集总元件模型</a>
+      <a href="#s2">LC串联谐振</a>
+      <a href="#s3">LC并联谐振</a>
+      <a href="#s4">串并联等效</a>
+      <a href="#s5">耦合与接入系数</a>
+      <a href="#s6">功率传输与匹配</a>
+      <a href="#s7">公式速查</a>
+    </div>
+  </nav>
+  <main>
+    <section class="card" id="s0">
+      <h2>0. 课程定位与研究对象</h2>
+      <p class="lead">先明确“这门课到底研究什么”，后面所有电路都能挂到收发信机的具体位置。</p>
+      <div class="callout key"><b class="title">🔴 核心结论</b>
+        高频电子线路研究的是<b>无线电通信系统中与高频信号处理有关的基本单元电路</b>，重点对象是<b>发送设备</b>与<b>接收设备</b>。本课程所说“高频”通常指 <b>3～30 MHz</b> 的短波段。
+      </div>
+      <p>一个典型无线电通信系统由五部分组成：输入变换器、发送设备、传输信道、接收设备、输出变换器。其中只有发送与接收两部分直接涉及高频信号处理。</p>
+      <figure>
+        <svg viewBox="0 0 940 180" role="img" aria-label="无线电通信系统五部分框图">
+          <defs>
+            <marker id="arr0" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1f4e8c"/></marker>
+          </defs>
+          <rect x="8" y="58" width="142" height="60" rx="10" fill="#eef4fb" stroke="#9bb8de"/>
+          <text x="79" y="85" text-anchor="middle" font-size="15" fill="#16375f">输入变换器</text>
+          <text x="79" y="105" text-anchor="middle" font-size="11" fill="#5b6577">声音/图像→电信号</text>
+          <line x1="150" y1="88" x2="178" y2="88" stroke="#1f4e8c" stroke-width="2" marker-end="url(#arr0)"/>
+          <rect x="180" y="54" width="152" height="66" rx="10" fill="#fff6e5" stroke="#f2b84b" stroke-width="2"/>
+          <text x="256" y="82" text-anchor="middle" font-size="15" fill="#7a4a00" font-weight="bold">发送设备</text>
+          <text x="256" y="103" text-anchor="middle" font-size="11" fill="#8a6a2a">调制/功放/天线馈送</text>
+          <line x1="332" y1="87" x2="360" y2="87" stroke="#1f4e8c" stroke-width="2" marker-end="url(#arr0)"/>
+          <rect x="362" y="58" width="152" height="60" rx="10" fill="#f0f2f6" stroke="#c3cad6"/>
+          <text x="438" y="85" text-anchor="middle" font-size="15" fill="#3d4656">传输信道</text>
+          <text x="438" y="105" text-anchor="middle" font-size="11" fill="#6b7280">电磁波/有线媒介</text>
+          <line x1="514" y1="88" x2="542" y2="88" stroke="#1f4e8c" stroke-width="2" marker-end="url(#arr0)"/>
+          <rect x="544" y="54" width="152" height="66" rx="10" fill="#fff6e5" stroke="#f2b84b" stroke-width="2"/>
+          <text x="620" y="82" text-anchor="middle" font-size="15" fill="#7a4a00" font-weight="bold">接收设备</text>
+          <text x="620" y="103" text-anchor="middle" font-size="11" fill="#8a6a2a">选频/放大/解调</text>
+          <line x1="696" y1="87" x2="724" y2="87" stroke="#1f4e8c" stroke-width="2" marker-end="url(#arr0)"/>
+          <rect x="726" y="58" width="162" height="60" rx="10" fill="#eef4fb" stroke="#9bb8de"/>
+          <text x="807" y="85" text-anchor="middle" font-size="15" fill="#16375f">输出变换器</text>
+          <text x="807" y="105" text-anchor="middle" font-size="11" fill="#5b6577">电信号→声音/图像</text>
+          <text x="256" y="24" text-anchor="middle" font-size="14" fill="#7a4a00">课程重点研究对象</text>
+          <text x="620" y="24" text-anchor="middle" font-size="14" fill="#7a4a00">课程重点研究对象</text>
+        </svg>
+        <figcaption>图 0-1 无线电通信系统组成；橙色框为高频电子线路重点研究对象</figcaption>
+      </figure>
+      <div class="callout summary"><b class="title">📌 一句话定位</b>
+        发送设备把低频信息“搬”到高频载波上发射；接收设备从众多信号中“选”出目标频率并还原信息。选频、放大、匹配、功率传输就是本章的公共基础。
+      </div>
+    </section>
+
+    <section class="card" id="s1">
+      <h2>1. 无源集总元件的电路模型与频率特性</h2>
+      <p class="lead">谐振回路由 \(L,C\) 构成，因此先要清楚电感和电容在高频下“不是理想元件”，而应使用含损耗的等效模型。</p>
+      <div class="callout key"><b class="title">🔴 必记概念：品质因数 \(Q\)</b>
+        \(Q\) 是衡量储能元件质量的指标，定义为<b>储能与耗能之比</b>。它不是固定常数，而是由电路连接方式与损耗电阻决定；串联看电流相等，并联看电压相等。
+      </div>
+
+      <h3>1.1 电感线圈的高频等效模型</h3>
+      <p>实际电感线圈存在导线电阻、趋肤效应等损耗，可等效为两种形式：</p>
+      <div class="grid2">
+        <figure>
+          <svg viewBox="0 0 300 170" role="img" aria-label="电感串联等效模型">
+            <circle cx="62" cy="50" r="5" fill="#1f4e8c"/><line x1="62" y1="50" x2="150" y2="50" stroke="#1f4e8c" stroke-width="2"/>
+            <rect x="150" y="38" width="80" height="24" fill="#fff" stroke="#1f4e8c"/><text x="190" y="54" text-anchor="middle" font-size="14">R₀</text>
+            <line x1="230" y1="50" x2="260" y2="50" stroke="#1f4e8c" stroke-width="2"/>
+            <path d="M260 50 q10 -22 20 0 q10 22 20 0 q10 -22 20 0 q10 22 20 0 q10 -22 20 0" fill="none" stroke="#1f4e8c" stroke-width="2"/>
+            <text x="310" y="54" font-size="14" fill="#16375f">L</text>
+            <text x="150" y="100" text-anchor="middle" font-size="13" fill="#5b6577">串联模型：\(R_0 + j\omega L\)</text>
+          </svg>
+          <figcaption>图 1-1 电感线圈串联等效模型</figcaption>
+        </figure>
+        <figure>
+          <svg viewBox="0 0 300 170" role="img" aria-label="电感并联等效模型">
+            <circle cx="62" cy="50" r="5" fill="#1f4e8c"/><line x1="62" y1="50" x2="120" y2="50" stroke="#1f4e8c" stroke-width="2"/>
+            <path d="M120 50 q10 -22 20 0 q10 22 20 0 q10 -22 20 0 q10 22 20 0 q10 -22 20 0" fill="none" stroke="#1f4e8c" stroke-width="2"/>
+            <text x="235" y="54" font-size="14" fill="#16375f">L</text>
+            <line x1="62" y1="50" x2="62" y2="90" stroke="#1f4e8c" stroke-width="2"/><line x1="62" y1="90" x2="180" y2="90" stroke="#1f4e8c" stroke-width="2"/>
+            <rect x="180" y="78" width="80" height="24" fill="#fff" stroke="#1f4e8c"/><text x="220" y="94" text-anchor="middle" font-size="14">G₀</text>
+            <line x1="260" y1="90" x2="290" y2="90" stroke="#1f4e8c" stroke-width="2"/>
+            <circle cx="290" cy="50" r="5" fill="#1f4e8c"/><line x1="290" y1="50" x2="290" y2="90" stroke="#1f4e8c" stroke-width="2"/>
+            <text x="150" y="120" text-anchor="middle" font-size="13" fill="#5b6577">并联模型：\(G_0 + \frac{1}{j\omega L}\)</text>
+          </svg>
+          <figcaption>图 1-2 电感线圈并联等效模型</figcaption>
+        </figure>
+      </div>
+      <div class="formula"><span class="no">电感高频特性</span>
+        \[
+        Z_L=R_0+j\omega L,\qquad Q_0=\frac{\omega L}{R_0},\qquad
+        \varphi=\arctan\frac{\omega L}{R_0}
+        \]
+        \[
+        Y_L=G_0+\frac{1}{j\omega L}=G_0-j\frac{1}{\omega L}
+        \]
+      </div>
+      <div class="callout warn"><b class="title">🟠 易错点</b>
+        电感在串联等效模型中 \(Q_0=\omega L/R_0\)，但若换到并联模型，电导/电阻关系会互换。不要背公式，要记“串联电流相同、并联电压相同”的推导起点。
+      </div>
+
+      <h3>1.2 电容的高频等效模型</h3>
+      <p>实际电容也存在介质损耗和引线电阻。串联模型中容抗大小为 \(1/(\omega C)\)，但电容阻抗的虚部是负的。</p>
+      <div class="grid2">
+        <figure>
+          <svg viewBox="0 0 300 170" role="img" aria-label="电容串联等效模型">
+            <circle cx="62" cy="50" r="5" fill="#1f4e8c"/><line x1="62" y1="50" x2="150" y2="50" stroke="#1f4e8c" stroke-width="2"/>
+            <rect x="150" y="38" width="80" height="24" fill="#fff" stroke="#1f4e8c"/><text x="190" y="54" text-anchor="middle" font-size="14">R₀</text>
+            <line x1="230" y1="50" x2="265" y2="50" stroke="#1f4e8c" stroke-width="2"/>
+            <line x1="265" y1="34" x2="265" y2="66" stroke="#1f4e8c" stroke-width="2"/><line x1="285" y1="34" x2="285" y2="66" stroke="#1f4e8c" stroke-width="2"/>
+            <text x="312" y="54" font-size="14" fill="#16375f">C</text>
+            <text x="150" y="100" text-anchor="middle" font-size="13" fill="#5b6577">串联模型：\(R_0 - j\frac{1}{\omega C}\)</text>
+          </svg>
+          <figcaption>图 1-3 电容串联等效模型</figcaption>
+        </figure>
+        <figure>
+          <svg viewBox="0 0 300 170" role="img" aria-label="电容并联等效模型">
+            <circle cx="62" cy="50" r="5" fill="#1f4e8c"/><line x1="62" y1="50" x2="120" y2="50" stroke="#1f4e8c" stroke-width="2"/>
+            <line x1="120" y1="34" x2="120" y2="66" stroke="#1f4e8c" stroke-width="2"/><line x1="140" y1="34" x2="140" y2="66" stroke="#1f4e8c" stroke-width="2"/>
+            <text x="165" y="54" font-size="14" fill="#16375f">C</text>
+            <line x1="62" y1="50" x2="62" y2="90" stroke="#1f4e8c" stroke-width="2"/><line x1="62" y1="90" x2="180" y2="90" stroke="#1f4e8c" stroke-width="2"/>
+            <rect x="180" y="78" width="80" height="24" fill="#fff" stroke="#1f4e8c"/><text x="220" y="94" text-anchor="middle" font-size="14">G₀</text>
+            <line x1="260" y1="90" x2="290" y2="90" stroke="#1f4e8c" stroke-width="2"/>
+            <circle cx="290" cy="50" r="5" fill="#1f4e8c"/><line x1="290" y1="50" x2="290" y2="90" stroke="#1f4e8c" stroke-width="2"/>
+            <text x="150" y="120" text-anchor="middle" font-size="13" fill="#5b6577">并联模型：\(G_0 + j\omega C\)</text>
+          </svg>
+          <figcaption>图 1-4 电容并联等效模型</figcaption>
+        </figure>
+      </div>
+      <div class="formula"><span class="no">电容高频特性</span>
+        \[
+        Z_C=R_0+\frac{1}{j\omega C}=R_0-j\frac{1}{\omega C},\qquad
+        Q_0=\frac{1}{\omega C R_0},\qquad
+        \varphi=-\arctan\frac{1}{\omega C R_0}
+        \]
+        \[
+        Y_C=G_0+j\omega C
+        \]
+      </div>
+      <div class="callout key"><b class="title">🔴 为什么电容可近似为无损元件</b>
+        电容的空载品质因数通常可达<b>几千到几万</b>，即损耗电阻 \(R_0\) 很小，所以在多数高频工程计算中把电容视为<b>无损元件</b>。电感损耗相对明显，不能忽略。
+      </div>
+    </section>
+
+    <section class="card" id="s2">
+      <h2>2. LC 串联谐振回路</h2>
+      <p class="lead">串联谐振是“电流最大”的谐振。分析套路固定：先画等效电路 → 写阻抗 → 令虚部为零求 \(\omega_0\) → 求品质因数 → 画特性曲线。</p>
+      <div class="callout key"><b class="title">🔴 串联谐振的判定</b>
+        对串联回路，谐振时 <b>阻抗最小、电流最大</b>。谐振条件不是“感抗最大”，而是 \(\omega L = 1/(\omega C)\)，即电抗虚部为零。
+      </div>
+
+      <h3>2.1 空载与有载电路</h3>
+      <div class="grid2">
+        <figure>
+          <svg viewBox="0 0 340 190" role="img" aria-label="空载串联谐振电路">
+            <circle cx="40" cy="70" r="6" fill="#1f4e8c"/><circle cx="40" cy="130" r="6" fill="#1f4e8c"/>
+            <circle cx="66" cy="70" r="3" fill="#1f4e8c"/><circle cx="66" cy="130" r="3" fill="#1f4e8c"/>
+            <path d="M40 70 h26" stroke="#1f4e8c" stroke-width="2"/><path d="M40 130 h26" stroke="#1f4e8c" stroke-width="2"/>
+            <rect x="66" y="58" width="70" height="24" fill="#fff" stroke="#1f4e8c"/><text x="101" y="74" text-anchor="middle" font-size="14">R₀</text>
+            <line x1="136" y1="70" x2="160" y2="70" stroke="#1f4e8c" stroke-width="2"/><line x1="136" y1="130" x2="160" y2="130" stroke="#1f4e8c" stroke-width="2"/>
+            <path d="M160 70 q10 -24 20 0 q10 24 20 0 q10 -24 20 0 q10 24 20 0 q10 -24 20 0" fill="none" stroke="#1f4e8c" stroke-width="2"/>
+            <text x="245" y="74" font-size="14" fill="#16375f">L</text>
+            <line x1="245" y1="70" x2="262" y2="70" stroke="#1f4e8c" stroke-width="2"/><line x1="245" y1="130" x2="262" y2="130" stroke="#1f4e8c" stroke-width="2"/>
+            <line x1="262" y1="54" x2="262" y2="86" stroke="#1f4e8c" stroke-width="2"/><line x1="282" y1="54" x2="282" y2="86" stroke="#1f4e8c" stroke-width="2"/>
+            <text x="305" y="74" font-size="14" fill="#16375f">C</text>
+            <line x1="305" y1="70" x2="322" y2="70" stroke="#1f4e8c" stroke-width="2"/><line x1="305" y1="130" x2="322" y2="130" stroke="#1f4e8c" stroke-width="2"/>
+            <line x1="322" y1="70" x2="322" y2="130" stroke="#1f4e8c" stroke-width="2"/>
+            <text x="182" y="170" text-anchor="middle" font-size="13" fill="#5b6577">空载：回路总电阻 = \(R_0\)</text>
+          </svg>
+          <figcaption>图 2-1 空载 LC 串联谐振回路</figcaption>
+        </figure>
+        <figure>
+          <svg viewBox="0 0 380 190" role="img" aria-label="有载串联谐振电路">
+            <circle cx="40" cy="70" r="6" fill="#1f4e8c"/><circle cx="40" cy="130" r="6" fill="#1f4e8c"/>
+            <path d="M40 70 h26" stroke="#1f4e8c" stroke-width="2"/><path d="M40 130 h26" stroke="#1f4e8c" stroke-width="2"/>
+            <rect x="66" y="58" width="58" height="24" fill="#fff" stroke="#1f4e8c"/><text x="95" y="74" text-anchor="middle" font-size="14">R₀</text>
+            <line x1="124" y1="70" x2="142" y2="70" stroke="#1f4e8c" stroke-width="2"/><line x1="124" y1="130" x2="142" y2="130" stroke="#1f4e8c" stroke-width="2"/>
+            <path d="M142 70 q10 -24 20 0 q10 24 20 0 q10 -24 20 0 q10 24 20 0 q10 -24 20 0" fill="none" stroke="#1f4e8c" stroke-width="2"/>
+            <text x="218" y="74" font-size="14" fill="#16375f">L</text>
+            <line x1="218" y1="70" x2="235" y2="70" stroke="#1f4e8c" stroke-width="2"/><line x1="218" y1="130" x2="235" y2="130" stroke="#1f4e8c" stroke-width="2"/>
+            <line x1="235" y1="54" x2="235" y2="86" stroke="#1f4e8c" stroke-width="2"/><line x1="255" y1="54" x2="255" y2="86" stroke="#1f4e8c" stroke-width="2"/>
+            <text x="275" y="74" font-size="14" fill="#16375f">C</text>
+            <line x1="275" y1="70" x2="292" y2="70" stroke="#1f4e8c" stroke-width="2"/><line x1="275" y1="130" x2="292" y2="130" stroke="#1f4e8c" stroke-width="2"/>
+            <rect x="292" y="58" width="58" height="24" fill="#fff" stroke="#e15b6e"/><text x="321" y="74" text-anchor="middle" font-size="14" fill="#7c1f30">R_L</text>
+            <line x1="350" y1="70" x2="366" y2="70" stroke="#1f4e8c" stroke-width="2"/><line x1="350" y1="130" x2="366" y2="130" stroke="#1f4e8c" stroke-width="2"/>
+            <line x1="366" y1="70" x2="366" y2="130" stroke="#1f4e8c" stroke-width="2"/>
+            <text x="190" y="170" text-anchor="middle" font-size="13" fill="#5b6577">有载：回路总电阻 = \(R_0+R_L\)</text>
+          </svg>
+          <figcaption>图 2-2 有载 LC 串联谐振回路</figcaption>
+        </figure>
+      </div>
+
+      <h3>2.2 阻抗与谐振频率</h3>
+      <div class="formula"><span class="no">串联谐振回路阻抗</span>
+        \[
+        Z=R+j\left(\omega L-\frac{1}{\omega C}\right)
+        \]
+        \[
+        |Z|=\sqrt{R^2+\left(\omega L-\frac{1}{\omega C}\right)^2}
+        \]
+      </div>
+      <p>令虚部为零：</p>
+      <div class="formula"><span class="no">谐振条件与谐振频率</span>
+        \[
+        \omega_0 L=\frac{1}{\omega_0 C}
+        \quad\Longrightarrow\quad
+        \omega_0=\frac{1}{\sqrt{LC}},\qquad f_0=\frac{1}{2\pi\sqrt{LC}}
+        \]
+      </div>
+      <div class="callout key"><b class="title">🔴 两个品质因数</b>
+        <b>空载品质因数</b> \(Q_0=\dfrac{\omega_0 L}{R_0}=\dfrac{1}{\omega_0 C R_0}\)；<br>
+        <b>有载品质因数</b> \(Q_L=\dfrac{\omega_0 L}{R_0+R_L}=\dfrac{1}{\omega_0 C(R_0+R_L)}\)。<br>
+        谐振频率与是否接负载无关，仍为 \(1/\sqrt{LC}\)；但接入 \(R_L\) 会增大总损耗电阻，使 \(Q_L\lt Q_0\)。
+      </div>
+
+      <h3>2.3 阻抗特性曲线</h3>
+      <p>把 \(|Z|\) 化成便于画图的归一化形式。设 \(Q=\omega_0 L/R\)，则：</p>
+      <div class="formula"><span class="no">归一化阻抗</span>
+        \[
+        Z=R\left[1+jQ\left(\frac{\omega}{\omega_0}-\frac{\omega_0}{\omega}\right)\right],
+        \qquad
+        |Z|=R\sqrt{1+Q^2\left(\frac{\omega}{\omega_0}-\frac{\omega_0}{\omega}\right)^2}
+        \]
+      </div>
+      <figure>
+        <svg viewBox="0 0 940 590" role="img" aria-label="串联谐振特性曲线">
+          <defs><marker id="arA" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5b6577"/></marker></defs>
+          <g transform="translate(20,10)">
+            <line x1="0" y1="0" x2="0" y2="250" stroke="#5b6577" stroke-width="1.5" marker-end="url(#arA)"/><line x1="0" y1="100" x2="430" y2="100" stroke="#5b6577" stroke-width="1.5" marker-end="url(#arA)"/>
+            <path d="M0 65 Q200 22 400 65" fill="none" stroke="#1f4e8c" stroke-width="3"/>
+            <circle cx="200" cy="36" r="5" fill="#1f4e8c"/><text x="212" y="33" font-size="12" fill="#1f4e8c">最小 \(|Z|=R\)</text>
+            <text x="208" y="118" font-size="13" fill="#3d4656">\(\omega_0\)</text><text x="415" y="118" font-size="13" fill="#3d4656">\(\omega\)</text>
+            <text x="8" y="16" font-size="13" fill="#1f4e8c">\(|Z|\)</text>
+          </g>
+          <g transform="translate(480,10)">
+            <line x1="0" y1="0" x2="0" y2="250" stroke="#5b6577" stroke-width="1.5" marker-end="url(#arA)"/><line x1="0" y1="100" x2="430" y2="100" stroke="#5b6577" stroke-width="1.5" marker-end="url(#arA)"/>
+            <path d="M0 145 Q100 100 200 100 Q300 100 400 55" fill="none" stroke="#e15b6e" stroke-width="2.5"/>
+            <line x1="200" y1="100" x2="200" y2="245" stroke="#c3cad6" stroke-dasharray="5 5"/>
+            <text x="208" y="118" font-size="13" fill="#3d4656">\(\omega_0\)</text><text x="415" y="118" font-size="13" fill="#3d4656">\(\omega\)</text>
+            <text x="8" y="16" font-size="13" fill="#e15b6e">\(\varphi\)</text>
+            <text x="260" y="80" font-size="12" fill="#7c1f30">感性区</text><text x="50" y="170" font-size="12" fill="#7c1f30">容性区</text>
+          </g>
+          <g transform="translate(20,320)">
+            <line x1="0" y1="0" x2="0" y2="250" stroke="#5b6577" stroke-width="1.5" marker-end="url(#arA)"/><line x1="0" y1="130" x2="430" y2="130" stroke="#5b6577" stroke-width="1.5" marker-end="url(#arA)"/>
+            <path d="M0 130 L180 250" fill="none" stroke="#e15b6e" stroke-width="2"/><text x="60" y="255" font-size="12" fill="#e15b6e">\(X_C=-\frac{1}{\omega C}\)</text>
+            <path d="M0 130 L180 20" fill="none" stroke="#1f4e8c" stroke-width="2"/><text x="40" y="35" font-size="12" fill="#1f4e8c">\(X_L=\omega L\)</text>
+            <path d="M0 300 Q140 160 400 70" fill="none" stroke="#37a46b" stroke-width="2.5"/><text x="350" y="85" font-size="12" fill="#175c38">\(X=X_L+X_C\)</text>
+            <line x1="180" y1="130" x2="180" y2="290" stroke="#c3cad6" stroke-dasharray="5 5"/>
+            <text x="190" y="145" font-size="13" fill="#3d4656">\(\omega_0\)</text><text x="415" y="145" font-size="13" fill="#3d4656">\(\omega\)</text>
+            <text x="8" y="16" font-size="13" fill="#16375f">\(X\)</text>
+          </g>
+        </svg>
+        <figcaption>图 2-3 串联谐振回路特性：\(|Z|\) 最小、\(\varphi\) 过零、\(X\) 由容性转感性</figcaption>
+      </figure>
+      <div class="callout summary"><b class="title">📌 串联谐振特性总结</b>
+        <ul>
+          <li>\(\omega=\omega_0\)：\(X=0\)，电路呈<b>纯阻性</b>，\(\varphi=0\)。</li>
+          <li>\(\omega&gt;\omega_0\)：\(X_L&gt;X_C\)，电路呈<b>感性</b>，\(\varphi&gt;0\)。</li>
+          <li>\(\omega&lt;\omega_0\)：\(X_L&lt;X_C\)，电路呈<b>容性</b>，\(\varphi&lt;0\)。</li>
+          <li>恒压源供电时，谐振点电流最大，\(R_0\) 上电压最大。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card" id="s3">
+      <h2>3. LC 并联谐振回路</h2>
+      <p class="lead">并联谐振与串联谐振对偶：谐振时<b>阻抗最大</b>，两端电压最大。它常用作选频放大器、接收机输入回路的负载。</p>
+      <div class="callout key"><b class="title">🔴 并联谐振的判定</b>
+        对并联回路，谐振时 <b>导纳虚部为零</b>，等效阻抗最大。理想情况下仍满足 \(\omega_0=1/\sqrt{LC}\)；考虑电感串联损耗时，并联谐振频率略低于 \(\omega_0\)。
+      </div>
+
+      <h3>3.1 两种等效形式</h3>
+      <p>电感既可等效为 \(R_0\) 与 \(L\) 串联，也可等效为 \(G_0\) 与 \(L\) 并联，因此并联谐振回路有两种画法。</p>
+      <div class="grid2">
+        <figure>
+          <svg viewBox="0 0 320 230" role="img" aria-label="并联谐振形式A">
+            <circle cx="50" cy="60" r="5" fill="#1f4e8c"/><circle cx="50" cy="170" r="5" fill="#1f4e8c"/>
+            <line x1="50" y1="60" x2="130" y2="60" stroke="#1f4e8c" stroke-width="2"/><line x1="50" y1="170" x2="130" y2="170" stroke="#1f4e8c" stroke-width="2"/>
+            <rect x="130" y="48" width="58" height="24" fill="#fff" stroke="#1f4e8c"/><text x="159" y="64" text-anchor="middle" font-size="13">R₀</text>
+            <path d="M188 60 q9 -21 18 0 q9 21 18 0 q9 -21 18 0 q9 21 18 0" fill="none" stroke="#1f4e8c" stroke-width="2"/>
+            <text x="255" y="64" font-size="13" fill="#16375f">L</text>
+            <line x1="255" y1="60" x2="290" y2="60" stroke="#1f4e8c" stroke-width="2"/><line x1="255" y1="170" x2="290" y2="170" stroke="#1f4e8c" stroke-width="2"/>
+            <line x1="290" y1="44" x2="290" y2="76" stroke="#1f4e8c" stroke-width="2"/><line x1="308" y1="44" x2="308" y2="76" stroke="#1f4e8c" stroke-width="2"/>
+            <text x="320" y="64" font-size="13" fill="#16375f">C</text>
+            <line x1="290" y1="60" x2="290" y2="170" stroke="#1f4e8c" stroke-width="2"/>
+            <text x="170" y="205" text-anchor="middle" font-size="12" fill="#5b6577">形式 A：R₀ 与 L 串联支路再与 C 并联</text>
+          </svg>
+          <figcaption>图 3-1 并联谐振回路形式 A</figcaption>
+        </figure>
+        <figure>
+          <svg viewBox="0 0 320 230" role="img" aria-label="并联谐振形式B">
+            <circle cx="50" cy="60" r="5" fill="#1f4e8c"/><circle cx="50" cy="170" r="5" fill="#1f4e8c"/>
+            <line x1="50" y1="60" x2="130" y2="60" stroke="#1f4e8c" stroke-width="2"/><line x1="50" y1="170" x2="130" y2="170" stroke="#1f4e8c" stroke-width="2"/>
+            <rect x="130" y="48" width="58" height="24" fill="#fff" stroke="#1f4e8c"/><text x="159" y="64" text-anchor="middle" font-size="13">G₀</text>
+            <line x1="188" y1="60" x2="188" y2="120" stroke="#1f4e8c" stroke-width="2"/>
+            <path d="M188 120 q9 -21 18 0 q9 21 18 0 q9 -21 18 0 q9 21 18 0" fill="none" stroke="#1f4e8c" stroke-width="2"/>
+            <text x="255" y="124" font-size="13" fill="#16375f">L</text>
+            <line x1="255" y1="120" x2="255" y2="170" stroke="#1f4e8c" stroke-width="2"/>
+            <line x1="188" y1="60" x2="188" y2="60" stroke="#1f4e8c" stroke-width="2"/>
+            <line x1="188" y1="60" x2="188" y2="60" stroke="#1f4e8c" stroke-width="2"/>
+            <line x1="255" y1="60" x2="255" y2="60" stroke="#1f4e8c" stroke-width="2"/>
+            <line x1="188" y1="60" x2="255" y2="60" stroke="#1f4e8c" stroke-width="2"/>
+            <line x1="255" y1="60" x2="290" y2="60" stroke="#1f4e8c" stroke-width="2"/>
+            <line x1="255" y1="170" x2="290" y2="170" stroke="#1f4e8c" stroke-width="2"/>
+            <line x1="290" y1="44" x2="290" y2="76" stroke="#1f4e8c" stroke-width="2"/><line x1="308" y1="44" x2="308" y2="76" stroke="#1f4e8c" stroke-width="2"/>
+            <line x1="290" y1="60" x2="290" y2="170" stroke="#1f4e8c" stroke-width="2"/>
+            <text x="170" y="205" text-anchor="middle" font-size="12" fill="#5b6577">形式 B：G₀、L、C 三支路并联</text>
+          </svg>
+          <figcaption>图 3-2 并联谐振回路形式 B</figcaption>
+        </figure>
+      </div>
+
+      <h3>3.2 形式 A 的导纳与谐振频率</h3>
+      <div class="formula"><span class="no">形式 A 总导纳</span>
+        \[
+        Y=\frac{1}{R_0+j\omega L}+j\omega C
+          =\frac{R_0}{R_0^2+(\omega L)^2}
+           +j\left[\omega C-\frac{\omega L}{R_0^2+(\omega L)^2}\right]
+        \]
+      </div>
+      <p>令虚部为零，可解出并联谐振频率：</p>
+      <div class="formula"><span class="no">并联谐振频率</span>
+        \[
+        \omega_p=\sqrt{\frac{1}{LC}-\frac{R_0^2}{L^2}}
+               =\omega_0\sqrt{1-\frac{R_0^2 C}{L}}
+               =\omega_0\sqrt{1-\frac{1}{Q_0^2}}
+        \]
+      </div>
+      <div class="callout warn"><b class="title">🟠 并联频率为什么不是 \(1/\sqrt{LC}\)</b>
+        当电感支路是 \(R_0+j\omega L\) 时，谐振频率会因 \(R_0\) 存在而比理想值低。只有 \(Q_0\gg1\)（通常成立）时，才有 \(\omega_p\approx\omega_0=1/\sqrt{LC}\)。
+      </div>
+
+      <h3>3.3 谐振电阻与品质因数</h3>
+      <p>谐振时回路等效电阻 \(R_p\) 为：</p>
+      <div class="formula"><span class="no">并联谐振电阻</span>
+        \[
+        R_p=\frac{R_0^2+(\omega L)^2}{R_0}
+            =R_0\left(1+Q_0^2\right)
+            \overset{Q_0\gg1}{\approx} Q_0^2 R_0
+        \]
+      </div>
+      <p>接负载 \(R_L\) 后，总并联电阻 \(R=R_0\parallel R_L\)，有载品质因数：</p>
+      <div class="formula"><span class="no">并联有载品质因数</span>
+        \[
+        Q_L=\frac{R}{\omega_0 L}=\omega_0 C R,\qquad
+        \frac{1}{R}=\frac{1}{R_0}+\frac{1}{R_L}
+        \]
+      </div>
+      <div class="callout key"><b class="title">🔴 串联/并联 Q 公式对比</b>
+        <ul>
+          <li>串联：\(Q=\dfrac{\omega_0 L}{R}=\dfrac{1}{\omega_0 C R}\)，<b>电抗在分子</b>。</li>
+          <li>并联：\(Q=\dfrac{R}{\omega_0 L}=\omega_0 C R\)，<b>电阻在分子</b>。</li>
+          <li>原因：串联支路电流相同，用 \(I^2X/I^2R\)；并联支路电压相同，用 \((U^2/X)/(U^2/R)\)。</li>
+        </ul>
+      </div>
+
+      <h3>3.4 并联阻抗特性</h3>
+      <div class="formula"><span class="no">并联归一化阻抗</span>
+        \[
+        Y=G\left[1+jQ\left(\frac{\omega}{\omega_0}-\frac{\omega_0}{\omega}\right)\right],
+        \qquad
+        |Z|=\frac{R}{\sqrt{1+Q^2\left(\frac{\omega}{\omega_0}-\frac{\omega_0}{\omega}\right)^2}}
+        \]
+        \[
+        \varphi=-\arctan\left[Q\left(\frac{\omega}{\omega_0}-\frac{\omega_0}{\omega}\right)\right]
+        \]
+      </div>
+      <figure>
+        <svg viewBox="0 0 940 300" role="img" aria-label="并联谐振特性曲线">
+          <defs><marker id="arB" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5b6577"/></marker></defs>
+          <g transform="translate(20,10)">
+            <line x1="0" y1="0" x2="0" y2="250" stroke="#5b6577" stroke-width="1.5" marker-end="url(#arB)"/><line x1="0" y1="100" x2="430" y2="100" stroke="#5b6577" stroke-width="1.5" marker-end="url(#arB)"/>
+            <path d="M0 100 Q200 55 400 100" fill="none" stroke="#1f4e8c" stroke-width="3"/>
+            <circle cx="200" cy="46" r="5" fill="#1f4e8c"/><text x="212" y="43" font-size="12" fill="#1f4e8c">最大 \(|Z|=R\)</text>
+            <text x="208" y="118" font-size="13" fill="#3d4656">\(\omega_0\)</text><text x="415" y="118" font-size="13" fill="#3d4656">\(\omega\)</text>
+            <text x="8" y="16" font-size="13" fill="#1f4e8c">\(|Z|\)</text>
+          </g>
+          <g transform="translate(480,10)">
+            <line x1="0" y1="0" x2="0" y2="250" stroke="#5b6577" stroke-width="1.5" marker-end="url(#arB)"/><line x1="0" y1="100" x2="430" y2="100" stroke="#5b6577" stroke-width="1.5" marker-end="url(#arB)"/>
+            <path d="M0 55 Q100 100 200 100 Q300 100 400 145" fill="none" stroke="#e15b6e" stroke-width="2.5"/>
+            <line x1="200" y1="100" x2="200" y2="245" stroke="#c3cad6" stroke-dasharray="5 5"/>
+            <text x="208" y="118" font-size="13" fill="#3d4656">\(\omega_0\)</text><text x="415" y="118" font-size="13" fill="#3d4656">\(\omega\)</text>
+            <text x="8" y="16" font-size="13" fill="#e15b6e">\(\varphi\)</text>
+            <text x="80" y="70" font-size="12" fill="#7c1f30">感性区</text><text x="300" y="160" font-size="12" fill="#7c1f30">容性区</text>
+          </g>
+        </svg>
+        <figcaption>图 3-3 并联谐振回路：\(|Z|\) 最大；\(\omega&lt;\omega_0\) 呈感性、\(\omega&gt;\omega_0\) 呈容性</figcaption>
+      </figure>
+      <div class="callout summary"><b class="title">📌 串并联谐振对比</b>
+        <div class="table-wrap"><table>
+          <thead><tr><th>项目</th><th>串联谐振</th><th>并联谐振</th></tr></thead>
+          <tbody>
+            <tr><td>谐振阻抗</td><td>最小 \(R\)</td><td>最大 \(R\)</td></tr>
+            <tr><td>谐振频率</td><td>\(\omega_0=1/\sqrt{LC}\)</td><td>高 Q 时 \(\approx\omega_0\)</td></tr>
+            <tr><td>\(\omega&gt;\omega_0\)</td><td>感性</td><td>容性</td></tr>
+            <tr><td>\(\omega&lt;\omega_0\)</td><td>容性</td><td>感性</td></tr>
+            <tr><td>品质因数</td><td>\(\omega_0 L/R\)</td><td>\(R/(\omega_0 L)\)</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </section>
+
+    <section class="card" id="s4">
+      <h2>4. 串并联阻抗等效变换</h2>
+      <p class="lead">很多匹配问题可归结为：把一个串联的 \(R_1+jX_1\) 变成一个并联的 \(R_2\parallel jX_2\)，或反过来。关键是“<b>在同一工作频率下，两端口的对外阻抗相等</b>”。</p>
+      <div class="callout key"><b class="title">🔴 等效条件</b>
+        等效不是元件参数相等，而是 <b>AB 两端看进去的复阻抗相等</b>。由于 \(X_L,X_C\) 随频率变化，等效关系只在指定工作频率 \(\omega\) 下成立。
+      </div>
+
+      <figure>
+        <svg viewBox="0 0 640 240" role="img" aria-label="串并联阻抗等效变换">
+          <defs><marker id="arC" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1f4e8c"/></marker></defs>
+          <circle cx="40" cy="60" r="5" fill="#1f4e8c"/><circle cx="40" cy="170" r="5" fill="#1f4e8c"/>
+          <line x1="40" y1="60" x2="100" y2="60" stroke="#1f4e8c" stroke-width="2"/><line x1="40" y1="170" x2="100" y2="170" stroke="#1f4e8c" stroke-width="2"/>
+          <rect x="100" y="48" width="60" height="24" fill="#fff" stroke="#1f4e8c"/><text x="130" y="64" text-anchor="middle" font-size="14">R₁</text>
+          <line x1="160" y1="60" x2="195" y2="60" stroke="#1f4e8c" stroke-width="2"/>
+          <rect x="195" y="48" width="60" height="24" fill="#fff" stroke="#1f4e8c"/><text x="225" y="64" text-anchor="middle" font-size="14">jX₁</text>
+          <line x1="255" y1="60" x2="290" y2="60" stroke="#1f4e8c" stroke-width="2"/><line x1="255" y1="170" x2="290" y2="170" stroke="#1f4e8c" stroke-width="2"/>
+          <circle cx="290" cy="60" r="5" fill="#1f4e8c"/><circle cx="290" cy="170" r="5" fill="#1f4e8c"/>
+          <text x="165" y="215" text-anchor="middle" font-size="13" fill="#5b6577">串联形式</text>
+
+          <line x1="320" y1="115" x2="345" y2="115" stroke="#1f4e8c" stroke-width="2" marker-end="url(#arC)"/>
+          <text x="332" y="100" text-anchor="middle" font-size="13" fill="#1f4e8c">等效</text>
+
+          <circle cx="370" cy="60" r="5" fill="#1f4e8c"/><circle cx="370" cy="170" r="5" fill="#1f4e8c"/>
+          <line x1="370" y1="60" x2="430" y2="60" stroke="#1f4e8c" stroke-width="2"/><line x1="370" y1="170" x2="430" y2="170" stroke="#1f4e8c" stroke-width="2"/>
+          <rect x="430" y="48" width="60" height="24" fill="#fff" stroke="#1f4e8c"/><text x="460" y="64" text-anchor="middle" font-size="14">R₂</text>
+          <line x1="490" y1="60" x2="490" y2="115" stroke="#1f4e8c" stroke-width="2"/>
+          <rect x="430" y="115" width="60" height="24" fill="#fff" stroke="#1f4e8c"/><text x="460" y="131" text-anchor="middle" font-size="14">jX₂</text>
+          <line x1="490" y1="139" x2="490" y2="170" stroke="#1f4e8c" stroke-width="2"/>
+          <line x1="370" y1="60" x2="490" y2="60" stroke="#1f4e8c" stroke-width="2"/><line x1="370" y1="170" x2="490" y2="170" stroke="#1f4e8c" stroke-width="2"/>
+          <circle cx="500" cy="60" r="5" fill="#1f4e8c"/><circle cx="500" cy="170" r="5" fill="#1f4e8c"/>
+          <line x1="490" y1="60" x2="500" y2="60" stroke="#1f4e8c" stroke-width="2"/><line x1="490" y1="170" x2="500" y2="170" stroke="#1f4e8c" stroke-width="2"/>
+          <text x="435" y="215" text-anchor="middle" font-size="13" fill="#5b6577">并联形式</text>
+        </svg>
+        <figcaption>图 4-1 同一频率下，串联形式与并联形式的端口等效</figcaption>
+      </figure>
+
+      <h3>4.1 推导</h3>
+      <p>并联阻抗：</p>
+      <div class="formula"><span class="no">并联支路阻抗</span>
+        \[
+        Z_p=\frac{jX_2\cdot R_2}{R_2+jX_2}
+            =\frac{R_2X_2^2}{R_2^2+X_2^2}
+             +j\frac{R_2^2X_2}{R_2^2+X_2^2}
+        \]
+      </div>
+      <p>与串联形式 \(Z_s=R_1+jX_1\) 对应实部、虚部相等。设 \(Q=R_2/X_2\)（并联支路的品质因数），得到：</p>
+      <div class="formula"><span class="no">串并联等效公式</span>
+        \[
+        R_1=\frac{R_2}{1+Q^2},\qquad
+        X_1=\frac{Q^2}{1+Q^2}X_2
+        \]
+        \[
+        R_2=(1+Q^2)R_1,\qquad
+        X_2=\left(1+\frac{1}{Q^2}\right)X_1
+        \]
+      </div>
+      <div class="callout key"><b class="title">🔴 高 Q 实用近似（\(Q\gg1\)）</b>
+        \[
+        R_2\approx Q^2R_1,\qquad X_2\approx X_1
+        \]
+        即：<b>并联电阻被“放大”约 \(Q^2\) 倍，而电抗近似不变</b>。这是很多匹配网络和并联谐振回路求 \(R_p\) 的常用结论。
+      </div>
+      <div class="callout warn"><b class="title">🟠 易错点</b>
+        \(Q\) 取的是<b>并联支路</b>的 \(R_2/X_2\)，不是任意值。若已知串联支路 \(R_1,X_1\)，可先求 \(Q=\sqrt{R_2/R_1-1}\) 或用 \(\sqrt{R_2/R_1}\)（高 Q 时）。
+      </div>
+    </section>
+
+    <section class="card" id="s5">
+      <h2>5. 耦合连接与接入系数</h2>
+      <p class="lead">把负载 \(R_L\) 从回路的一部分“折合”到整个回路两端，便于计算谐振回路的等效负载和品质因数。核心工具是<b>接入系数 \(p\)</b>。</p>
+      <div class="callout key"><b class="title">🔴 接入系数定义</b>
+        本讲采用 \(p=\dfrac{\text{变换前匝数}}{\text{变换后匝数}}=\dfrac{N_2}{N_1}=\dfrac{U_2}{U_1}\)。对变压器耦合，\(p=N_2/N_1\)；对自耦变压器，\(p=N_2/(N_1+N_2)\)；对电容分压，\(p=C_1/(C_1+C_2)\)。
+      </div>
+
+      <h3>5.1 变压器耦合</h3>
+      <figure>
+        <svg viewBox="0 0 700 210" role="img" aria-label="变压器耦合阻抗变换">
+          <circle cx="60" cy="55" r="5" fill="#1f4e8c"/><circle cx="60" cy="165" r="5" fill="#1f4e8c"/>
+          <line x1="60" y1="55" x2="180" y2="55" stroke="#1f4e8c" stroke-width="2"/><line x1="60" y1="165" x2="180" y2="165" stroke="#1f4e8c" stroke-width="2"/>
+          <path d="M180 55 q8 -24 16 0 q8 24 16 0 q8 -24 16 0 q8 24 16 0 q8 -24 16 0" fill="none" stroke="#1f4e8c" stroke-width="2"/>
+          <text x="270" y="59" font-size="13" fill="#16375f">N₁</text>
+          <line x1="270" y1="55" x2="400" y2="55" stroke="#1f4e8c" stroke-width="2"/><line x1="270" y1="165" x2="400" y2="165" stroke="#1f4e8c" stroke-width="2"/>
+          <path d="M400 55 q8 -24 16 0 q8 24 16 0 q8 -24 16 0 q8 24 16 0 q8 -24 16 0" fill="none" stroke="#1f4e8c" stroke-width="2"/>
+          <text x="490" y="59" font-size="13" fill="#16375f">N₂</text>
+          <line x1="490" y1="55" x2="610" y2="55" stroke="#1f4e8c" stroke-width="2"/><line x1="490" y1="165" x2="610" y2="165" stroke="#1f4e8c" stroke-width="2"/>
+          <rect x="610" y="43" width="62" height="24" fill="#fff" stroke="#e15b6e"/><text x="641" y="59" text-anchor="middle" font-size="14" fill="#7c1f30">R_L</text>
+          <line x1="672" y1="55" x2="690" y2="55" stroke="#1f4e8c" stroke-width="2"/><line x1="672" y1="165" x2="690" y2="165" stroke="#1f4e8c" stroke-width="2"/>
+          <text x="300" y="195" text-anchor="middle" font-size="13" fill="#5b6577">等效到一次侧：</text>
+          <text x="520" y="195" text-anchor="middle" font-size="13" fill="#16375f">\(R_L' = R_L/p^2\)</text>
+        </svg>
+        <figcaption>图 5-1 变压器耦合：\(p=N_2/N_1\)</figcaption>
+      </figure>
+      <div class="formula"><span class="no">变压器耦合变换</span>
+        \[
+        R_L'=\frac{R_L}{p^2},\qquad
+        G_L'=p^2G_L,\qquad
+        X_L'=\frac{X_L}{p^2},\qquad
+        L_L'=\frac{L_L}{p^2}
+        \]
+        \[
+        U_1'=\frac{U_2}{p},\qquad I_1'=pI_2
+        \]
+      </div>
+
+      <h3>5.2 自耦变压器耦合</h3>
+      <figure>
+        <svg viewBox="0 0 680 210" role="img" aria-label="自耦变压器耦合阻抗变换">
+          <circle cx="60" cy="55" r="5" fill="#1f4e8c"/><circle cx="60" cy="165" r="5" fill="#1f4e8c"/>
+          <line x1="60" y1="55" x2="180" y2="55" stroke="#1f4e8c" stroke-width="2"/><line x1="60" y1="165" x2="180" y2="165" stroke="#1f4e8c" stroke-width="2"/>
+          <path d="M180 55 q8 -24 16 0 q8 24 16 0 q8 -24 16 0 q8 24 16 0 q8 -24 16 0" fill="none" stroke="#1f4e8c" stroke-width="2"/>
+          <text x="270" y="59" font-size="13" fill="#16375f">N₁</text>
+          <line x1="270" y1="55" x2="360" y2="55" stroke="#1f4e8c" stroke-width="2"/>
+          <path d="M360 55 q8 -24 16 0 q8 24 16 0 q8 -24 16 0 q8 24 16 0 q8 -24 16 0" fill="none" stroke="#1f4e8c" stroke-width="2"/>
+          <text x="450" y="59" font-size="13" fill="#16375f">N₂</text>
+          <line x1="450" y1="55" x2="570" y2="55" stroke="#1f4e8c" stroke-width="2"/><line x1="450" y1="165" x2="570" y2="165" stroke="#1f4e8c" stroke-width="2"/>
+          <rect x="570" y="43" width="62" height="24" fill="#fff" stroke="#e15b6e"/><text x="601" y="59" text-anchor="middle" font-size="14" fill="#7c1f30">R_L</text>
+          <line x1="632" y1="55" x2="650" y2="55" stroke="#1f4e8c" stroke-width="2"/><line x1="632" y1="165" x2="650" y2="165" stroke="#1f4e8c" stroke-width="2"/>
+          <line x1="180" y1="55" x2="450" y2="55" stroke="#1f4e8c" stroke-width="2"/><line x1="180" y1="165" x2="450" y2="165" stroke="#1f4e8c" stroke-width="2"/>
+          <text x="150" y="35" font-size="13" fill="#5b6577">一次侧总匝数 \(N_1+N_2\)</text>
+          <text x="520" y="195" text-anchor="middle" font-size="13" fill="#16375f">\(R_L' = \left(\frac{N_1+N_2}{N_2}\right)^2 R_L\)</text>
+        </svg>
+        <figcaption>图 5-2 自耦变压器耦合：负载接在 \(N_2\) 两端，一次侧为 \(N_1+N_2\)</figcaption>
+      </figure>
+      <div class="formula"><span class="no">自耦变压器接入系数</span>
+        \[
+        p=\frac{N_2}{N_1+N_2},\qquad
+        R_L'=\frac{R_L}{p^2}
+        \]
+      </div>
+
+      <h3>5.3 电容分压耦合</h3>
+      <figure>
+        <svg viewBox="0 0 700 220" role="img" aria-label="电容分压耦合阻抗变换">
+          <circle cx="60" cy="60" r="5" fill="#1f4e8c"/><circle cx="60" cy="180" r="5" fill="#1f4e8c"/>
+          <line x1="60" y1="60" x2="120" y2="60" stroke="#1f4e8c" stroke-width="2"/><line x1="60" y1="180" x2="120" y2="180" stroke="#1f4e8c" stroke-width="2"/>
+          <line x1="120" y1="44" x2="120" y2="76" stroke="#1f4e8c" stroke-width="2"/><line x1="140" y1="44" x2="140" y2="76" stroke="#1f4e8c" stroke-width="2"/>
+          <text x="160" y="64" font-size="13" fill="#16375f">C₁</text>
+          <line x1="120" y1="60" x2="180" y2="60" stroke="#1f4e8c" stroke-width="2"/>
+          <line x1="180" y1="60" x2="180" y2="150" stroke="#1f4e8c" stroke-width="2"/>
+          <line x1="180" y1="44" x2="180" y2="76" stroke="#1f4e8c" stroke-width="2"/><line x1="200" y1="44" x2="200" y2="76" stroke="#1f4e8c" stroke-width="2"/>
+          <text x="220" y="64" font-size="13" fill="#16375f">C₂</text>
+          <line x1="180" y1="60" x2="240" y2="60" stroke="#1f4e8c" stroke-width="2"/>
+          <rect x="240" y="48" width="62" height="24" fill="#fff" stroke="#e15b6e"/><text x="271" y="64" text-anchor="middle" font-size="14" fill="#7c1f30">R_L</text>
+          <line x1="302" y1="60" x2="340" y2="60" stroke="#1f4e8c" stroke-width="2"/><line x1="240" y1="150" x2="340" y2="150" stroke="#1f4e8c" stroke-width="2"/><line x1="240" y1="60" x2="240" y2="150" stroke="#1f4e8c" stroke-width="2"/>
+          <circle cx="340" cy="60" r="5" fill="#1f4e8c"/><circle cx="340" cy="180" r="5" fill="#1f4e8c"/>
+          <line x1="340" y1="60" x2="340" y2="180" stroke="#1f4e8c" stroke-width="2"/><line x1="120" y1="180" x2="340" y2="180" stroke="#1f4e8c" stroke-width="2"/>
+          <text x="230" y="200" text-anchor="middle" font-size="13" fill="#16375f">\(R_L' = \left(\frac{C_1+C_2}{C_1}\right)^2 R_L\)</text>
+        </svg>
+        <figcaption>图 5-3 电容分压耦合：\(R_L\) 与 \(C_2\) 并联，等效后跨在 \(C_1+C_2\) 串联两端</figcaption>
+      </figure>
+      <div class="formula"><span class="no">电容分压接入系数</span>
+        \[
+        U_1=I\left(\frac{1}{\omega C_1}+\frac{1}{\omega C_2}\right),\qquad
+        U_2=I\frac{1}{\omega C_2}
+        \]
+        \[
+        p=\frac{U_2}{U_1}=\frac{C_1}{C_1+C_2},\qquad
+        R_L'=\frac{R_L}{p^2}
+        \]
+      </div>
+
+      <div class="callout summary"><b class="title">📌 折合规则速记</b>
+        记住一对“基准量”：\(p=U_2/U_1\)。则电阻、电抗、电感折合到一次侧均除以 \(p^2\)；电导折合到一次侧乘以 \(p^2\)；电压折合除以 \(p\)；电流折合乘以 \(p\)。功率 \(UI\) 保持不变，这正是推导的物理依据。
+      </div>
+    </section>
+
+    <section class="card" id="s6">
+      <h2>6. 功率传输、匹配网络与滤波器</h2>
+      <p class="lead">谐振回路只是“选频”；把信号有效地从放大器送出去，还要做<b>功率匹配</b>。这直接关系到功率放大器是否安全、输出功率是否最大。</p>
+      <div class="callout key"><b class="title">🔴 为什么要匹配</b>
+        高频功率放大器输出端若负载不匹配，会产生较大反射/驻波，功率不能有效送出，严重时可能<b>烧坏功放管</b>。匹配网络把实际负载变换成功放需要的阻抗，实现最大功率传输并抑制无用频率。
+      </div>
+
+      <figure>
+        <svg viewBox="0 0 800 210" role="img" aria-label="功率匹配网络框图">
+          <rect x="20" y="62" width="180" height="62" rx="10" fill="#eef4fb" stroke="#9bb8de"/>
+          <text x="110" y="90" text-anchor="middle" font-size="14" fill="#16375f">高频功率放大器</text>
+          <text x="110" y="112" text-anchor="middle" font-size="12" fill="#5b6577">输出阻抗 \(Z_S=R_S+jX_S\)</text>
+          <line x1="200" y1="93" x2="250" y2="93" stroke="#1f4e8c" stroke-width="2"/>
+          <rect x="250" y="58" width="200" height="70" rx="12" fill="#fff6e5" stroke="#f2b84b" stroke-width="2"/>
+          <text x="350" y="88" text-anchor="middle" font-size="14" fill="#7a4a00" font-weight="bold">匹配网络</text>
+          <text x="350" y="110" text-anchor="middle" font-size="12" fill="#8a6a2a">LC / 变压器 / π型 / T型</text>
+          <line x1="450" y1="93" x2="500" y2="93" stroke="#1f4e8c" stroke-width="2"/>
+          <rect x="500" y="62" width="200" height="62" rx="10" fill="#eef4fb" stroke="#9bb8de"/>
+          <text x="600" y="90" text-anchor="middle" font-size="14" fill="#16375f">负载 / 天线</text>
+          <text x="600" y="112" text-anchor="middle" font-size="12" fill="#5b6577">\(Z_L=R_L+jX_L\)</text>
+          <path d="M350 132 q0 24 24 24 q24 0 24 -24" fill="none" stroke="#37a46b" stroke-width="2"/>
+          <text x="398" y="162" text-anchor="middle" font-size="12" fill="#175c38">目标：\(Z_{in}\approx Z_S^*\)</text>
+        </svg>
+        <figcaption>图 6-1 匹配网络把负载变换为源阻抗的共轭值，实现最大功率传输</figcaption>
+      </figure>
+
+      <h3>6.1 最大功率传输条件</h3>
+      <p>设源阻抗 \(Z_S=R_S+jX_S\)，负载经匹配网络后呈现 \(Z_{in}=R_{in}+jX_{in}\)。最大功率传输要求：</p>
+      <div class="formula"><span class="no">共轭匹配</span>
+        \[
+        Z_{in}=Z_S^* \quad\Longleftrightarrow\quad R_{in}=R_S,\quad X_{in}=-X_S
+        \]
+      </div>
+      <p>纯电阻源的特例：当 \(R_L=R_S\) 时，负载获得最大功率 \(P_{L,\max}=V_S^2/(4R_S)\)；但此时传输效率只有 50%，另一半功率消耗在源内阻上。</p>
+      <div class="callout warn"><b class="title">🟠 区分“最大功率”与“最高效率”</b>
+        共轭匹配使<b>负载功率最大</b>，但效率不一定最高。通信小信号放大追求功率增益，功放级常需折中考虑输出功率、效率、线性与可靠性。
+      </div>
+
+      <h3>6.2 滤波器与谐振回路的联系</h3>
+      <p>接收机前端从天线接收大量信号，需要在进入放大器前用滤波器/选频回路抑制带外噪声和干扰。</p>
+      <ul>
+        <li><b>低通/高通/带通/带阻</b>是按频率选择特性分类的四种基本滤波器。</li>
+        <li>LC 谐振回路本身就是一个<b>带通选频网络</b>；串联谐振对目标频率呈现低阻抗，并联谐振对目标频率呈现高阻抗。</li>
+        <li>实际工程常使用多级谐振回路或集中滤波器（晶体、陶瓷、声表面波 SAW 滤波器）获得更陡峭的矩形系数。</li>
+      </ul>
+      <div class="callout ext"><b class="title">💡 拓展：矩形系数 \(K_{0.1}\)</b>
+        常定义 \(K_{0.1}=BW_{0.1}/BW_{0.707}\)，即 0.1 电平带宽与 3 dB 带宽之比。\(K_{0.1}\) 越接近 1，选频特性越接近理想矩形。单 LC 谐振回路矩形系数较大，因此高性能接收机常采用多级谐振回路或专用滤波器。
+      </div>
+    </section>
+
+    <section class="card" id="s7">
+      <h2>7. 公式速查与自测</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>物理量</th><th>公式</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>谐振频率</td><td>\(f_0=\frac{1}{2\pi\sqrt{LC}}\)</td><td>理想 LC；并联有损时略低</td></tr>
+          <tr><td>电感串联 Q</td><td>\(Q_0=\frac{\omega L}{R_0}\)</td><td>串联电流相等</td></tr>
+          <tr><td>电容串联 Q</td><td>\(Q_0=\frac{1}{\omega C R_0}\)</td><td>电容损耗小，可视为无损</td></tr>
+          <tr><td>串联谐振 |Z|</td><td>\(R\sqrt{1+Q^2\left(\frac{\omega}{\omega_0}-\frac{\omega_0}{\omega}\right)^2}\)</td><td>\(\omega_0\) 处最小</td></tr>
+          <tr><td>并联谐振 |Z|</td><td>\(\frac{R}{\sqrt{1+Q^2\left(\frac{\omega}{\omega_0}-\frac{\omega_0}{\omega}\right)^2}}\)</td><td>\(\omega_0\) 处最大</td></tr>
+          <tr><td>串并联变换</td><td>\(R_2=(1+Q^2)R_1\)，\(X_2\approx X_1\)</td><td>高 Q 时近似</td></tr>
+          <tr><td>接入系数变换</td><td>\(R_L'=\frac{R_L}{p^2}\)</td><td>\(p=U_2/U_1\)</td></tr>
+          <tr><td>最大功率</td><td>\(Z_{in}=Z_S^*\)</td><td>共轭匹配</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>快速自测</h3>
+      <ol>
+        <li>为什么“高频”在本课程中主要指 3–30 MHz？</li>
+        <li>串联谐振和并联谐振在 \(\omega&gt;\omega_0\) 时分别呈感性还是容性？</li>
+        <li>并联谐振回路的谐振频率为何在 \(Q_0\gg1\) 时才近似等于 \(1/\sqrt{LC}\)？</li>
+        <li>已知变压器 \(N_1:N_2=4:1\)，\(R_L=50\,\Omega\)，折合到一次侧的 \(R_L'\) 是多少？</li>
+        <li>匹配网络的共轭匹配条件是什么？它与“最高效率”是否总是一回事？</li>
+      </ol>
+      <div class="callout summary"><b class="title">📌 本章学习主线</b>
+        集总元件模型 → LC 串/并联谐振（电路、\(f_0\)、\(Q\)、特性曲线）→ 串并联阻抗等效 → 耦合接入系数 → 功率匹配网络 → 滤波器。前四步是本章必考基础，后两步是工程应用延伸。
+      </div>
+    </section>
+
+  </main>
+  <div class="foot">笔记依据：<i>“指定方向录音 1”-转文本结果</i> · 上传后可作为 GitHub Pages 移动端网页阅读。</div>
+</div>
+</body>
+</html>

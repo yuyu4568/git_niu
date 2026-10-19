@@ -1,0 +1,8 @@
+# 临时工作目录（截图、中间产物、辅助脚本）
+_tmp/
+*.log
+.DS_Store
+Thumbs.db
+
+# 独立仓库，单独推送到 Principles-and-Applications-of-Embedded-System-Design
+embedded-notes/
